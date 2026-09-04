@@ -101,6 +101,24 @@ o site continuar sem dependências.
 
 ---
 
+## Publicando (Cloudflare Pages)
+
+O repositório guarda mais coisa do que o site precisa servir: os originais em
+alta de `assets/img/Criativo/` (5,4 MB) e os mockups de `docs/` (5,7 MB) são
+fonte e referência, não conteúdo. Publicar a raiz colocaria no ar, entre
+outras coisas, os mockups com as métricas fictícias.
+
+Por isso o deploy monta uma pasta só com o que é servido:
+
+- **Build command:**
+  `mkdir -p dist && cp index.html dist/ && cp -r assets dist/ && rm -rf dist/assets/img/Criativo`
+- **Build output directory:** `dist`
+
+Sai de 14 MB para 2,7 MB. Verificado: os 23 arquivos referenciados pelo
+`index.html` estão todos presentes no `dist`.
+
+---
+
 ## Verificação
 
 `docs/responsive-check.html` renderiza o site em 375, 768, 1024, 1280 e
