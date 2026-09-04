@@ -1,0 +1,17 @@
+# dependências (o site não usa nenhuma; isto é só para scripts pontuais)
+node_modules/
+package-lock.json
+
+# sistema operacional
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# editores
+.vscode/
+.idea/
+*.swp
+
+# logs e temporários
+*.log
+tmp/

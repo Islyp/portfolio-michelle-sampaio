@@ -1,0 +1,102 @@
+/* ==========================================================================
+   VÍDEOS — fachada + embed do Instagram sob demanda
+   O card só vira player quando o visitante clica; até lá nada da Meta
+   é carregado (nem script, nem cookie).
+   ========================================================================== */
+
+.videos__head { max-width: 54ch; }
+
+.videos__title {
+  margin-top: .6rem;
+  font-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem);
+}
+
+.videos__lead {
+  margin-top: .8rem;
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.videos__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(.9rem, 1.8vw, 1.8rem);
+  margin-top: clamp(1.5rem, 2.4vw, 2.4rem);
+}
+
+/* ── área do vídeo ───────────────────────────────────────────────────── */
+/* Quem define a altura é o embed.js do Instagram; aqui só damos um piso
+   enquanto ele não chega, para o layout não pular quando o embed entra. */
+.video-card__media {
+  position: relative;
+  min-height: clamp(420px, 46vw, 560px);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+}
+
+/* com o embed no lugar, quem manda na altura é ele — senão o piso
+   deixaria uma faixa branca sobrando embaixo */
+.video-card__media:has(iframe) { min-height: 0; }
+
+/* o embed.js injeta estilos inline com margens próprias */
+.video-card__media .instagram-media {
+  margin: 0 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.video-card__media iframe {
+  display: block;
+  width: 100% !important;
+  border: 0 !important;
+}
+
+/* estado de espera: link visível caso o script do Instagram não carregue */
+.video-card__media > .instagram-media > a {
+  display: block;
+  padding: 1.2rem;
+  font-size: var(--fs-micro);
+  color: var(--muted);
+}
+
+/* ── legenda ─────────────────────────────────────────────────────────── */
+.video-card__meta { padding-top: .75rem; }
+
+.video-card__brand {
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.video-card__desc {
+  margin-top: .12em;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .videos__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .videos__grid {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+  }
+}

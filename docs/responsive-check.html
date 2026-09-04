@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Checagem responsiva — Portfólio Michelle</title>
+<style>
+  body { margin:0; padding:14px; background:#20201f; font:12px/1.4 system-ui, sans-serif; color:#e9e5e1; }
+  figure { margin:0 0 20px; }
+  figcaption { margin-bottom:6px; letter-spacing:.08em; text-transform:uppercase; opacity:.7; }
+  .frame { border:1px solid #45423f; background:#fff; overflow:hidden; }
+  iframe { border:0; display:block; }
+</style>
+</head>
+<body>
+<script>
+  // ?w=375  renderiza só essa largura, em escala 1:1
+  const params = new URLSearchParams(location.search);
+  const only = params.get('w');
+  const specs = [
+    { w: 375,  h: 1500 },
+    { w: 768,  h: 1250 },
+    { w: 1024, h: 820  },
+    { w: 1280, h: 820  },
+    { w: 1440, h: 860  },
+  ].filter(s => !only || String(s.w) === only);
+
+  for (const sp of specs) {
+    const fig = document.createElement('figure');
+    fig.innerHTML = `<figcaption>${sp.w} px</figcaption>
+      <div class="frame" style="width:${sp.w}px;height:${sp.h}px">
+        <iframe src="../index.html" style="width:${sp.w}px;height:${sp.h}px"></iframe>
+      </div>`;
+    document.body.appendChild(fig);
+  }
+</script>
+</body>
+</html>

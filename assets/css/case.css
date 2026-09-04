@@ -1,0 +1,448 @@
+/* ==========================================================================
+   CASE EM DESTAQUE (Elevamos) + NÚMEROS QUE IMPORTAM
+   Mesmo .shell e mesmo ritmo vertical (.section) das demais seções.
+   ========================================================================== */
+
+/* ── grid da seção ───────────────────────────────────────────────────── */
+.case__grid {
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.78fr) minmax(0, .68fr);
+  align-items: start;
+  gap: clamp(1.4rem, 2.4vw, 2.6rem);
+}
+
+/* ── coluna de texto ─────────────────────────────────────────────────── */
+/* o título do case é a própria logo do cliente — continua sendo um h2,
+   com o nome da marca no alt da imagem */
+.case__title { margin-top: .8rem; }
+
+.case__logo {
+  width: clamp(150px, 15vw, 210px);
+  height: auto;
+}
+
+.case__kicker {
+  margin-top: .35rem;
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.case__lead {
+  margin-top: clamp(.8rem, 1.4vw, 1.2rem);
+  max-width: 34ch;
+  font-size: var(--fs-micro);
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* passos: desafio · estratégia · execução · resultados */
+.steps {
+  display: grid;
+  gap: clamp(.85rem, 1.2vw, 1.25rem);
+  margin-top: clamp(1.2rem, 2vw, 1.9rem);
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .8rem;
+  align-items: start;
+}
+
+.step__icon svg {
+  width: clamp(24px, 2vw, 30px);
+  height: auto;
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.step__icon .frame { stroke-width: 1.2; opacity: .4; }
+
+.step__text h3 {
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.step__text p {
+  margin-top: .2em;
+  font-size: var(--fs-micro);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* ── galeria de peças ────────────────────────────────────────────────── */
+.case__gallery {
+  display: grid;
+  grid-template-columns: 1.62fr 1fr 1fr;
+  grid-template-rows: 1.12fr 1fr;
+  gap: clamp(.4rem, .7vw, .7rem);
+  min-height: clamp(330px, 33vw, 520px);
+}
+
+.case-card {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  border-radius: 10px;
+  /* fundo provisório até as artes entrarem — mesma leitura do layout */
+  background:
+    radial-gradient(120% 90% at 78% 8%, rgba(200, 109, 81, .22), transparent 62%),
+    linear-gradient(158deg, #262019 0%, #14100c 62%, #0d0a08 100%);
+  color: var(--cream-hi);
+  isolation: isolate;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.case-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.case-card--wide { grid-column: span 1; }
+
+.case-card__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.case-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .78;
+}
+
+/* card que mostra uma arte real: a peça aparece inteira, sem escurecer,
+   e o rótulo ganha um véu só atrás dele para continuar legível */
+.case-card--art { background: var(--cream-lo); }
+
+.case-card--art .case-card__media { z-index: 0; }
+
+.case-card--art .case-card__media img {
+  opacity: 1;
+  transition: transform .6s var(--ease);
+}
+
+.case-card--art:hover .case-card__media img { transform: scale(1.04); }
+
+.case-card--art .case-card__body {
+  position: relative;
+  z-index: 1;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(12, 10, 9, .72) 0, transparent 62%);
+}
+
+.case-card__body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: clamp(.75rem, 1.2vw, 1.3rem);
+}
+
+.case-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, .55rem + 1.5vw, 2rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+}
+
+.case-card__title em { font-style: normal; color: var(--accent-soft); }
+
+.case-card__title--sm { font-size: clamp(.72rem, .4rem + .85vw, 1.06rem); }
+
+.case-card__desc {
+  margin-top: .5em;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--cream-hi) 62%, transparent);
+}
+
+.case-card__tag {
+  margin-top: auto;
+  padding-top: .8em;
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--cream-hi) 78%, transparent);
+}
+
+.case-card__tag--end {
+  margin-top: auto;
+  color: var(--accent-soft);
+}
+
+/* card de vídeo */
+.case-card--video { align-items: center; justify-content: center; }
+
+.case-card__play {
+  display: grid;
+  place-items: center;
+  width: clamp(38px, 3.4vw, 54px);
+  aspect-ratio: 1;
+  border: 1.5px solid color-mix(in srgb, var(--cream-hi) 72%, transparent);
+  border-radius: 50%;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.case-card__play svg {
+  width: 46%;
+  fill: var(--cream-hi);
+  margin-left: 8%;
+}
+
+.case-card--video:hover .case-card__play {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ── painel de resultados ────────────────────────────────────────────── */
+.case__results {
+  position: relative;
+  padding: clamp(1rem, 1.5vw, 1.6rem) clamp(.9rem, 1.3vw, 1.4rem) clamp(2.6rem, 4vw, 4rem);
+  background: var(--cream-hi);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+}
+
+.result-list {
+  display: grid;
+  gap: clamp(.85rem, 1.3vw, 1.3rem);
+  margin-top: clamp(.8rem, 1.2vw, 1.1rem);
+}
+
+.result__value {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, .9rem + 1.4vw, 2rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  color: var(--accent);
+}
+
+.result__label {
+  margin-top: .15em;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.result__label .up { color: var(--green); font-weight: 600; }
+
+/* seta desenhada à mão no canto do painel */
+.doodle--arrow {
+  position: absolute;
+  right: clamp(.8rem, 1.4vw, 1.6rem);
+  bottom: clamp(.7rem, 1.2vw, 1.2rem);
+  width: clamp(48px, 4.6vw, 76px);
+  opacity: .38;
+}
+
+
+/* ==========================================================================
+   NÚMEROS QUE IMPORTAM
+   ========================================================================== */
+
+/* os números vivem dentro da mesma seção do case: sem divisa entre eles,
+   só um respiro maior que o gap interno dos grids */
+.numbers__grid {
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.9fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(1.5rem, 2.6vw, 3rem);
+  margin-top: clamp(1.8rem, 1rem + 2vw, 3.2rem);
+}
+
+.numbers__title { font-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem); }
+
+.numbers__lead {
+  margin-top: .7rem;
+  max-width: 30ch;
+  font-size: var(--fs-micro);
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+/* quatro indicadores */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stat {
+  padding-inline: clamp(.5rem, 1.2vw, 1.3rem);
+  text-align: center;
+}
+
+.stat + .stat { border-left: 1px solid var(--line-soft); }
+
+.stat__icon svg {
+  width: clamp(24px, 2.1vw, 32px);
+  height: auto;
+  margin-inline: auto;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stat__value {
+  margin-top: .5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, .85rem + 1.5vw, 2.1rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+}
+
+.stat__label {
+  margin-top: .3em;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* barras: publicações de maior alcance */
+.top-posts__list {
+  display: grid;
+  gap: .65rem;
+  margin-top: .9rem;
+}
+
+.top-post {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: .7rem;
+}
+
+.top-post__name {
+  grid-column: 1;
+  font-size: var(--fs-micro);
+  color: var(--ink-soft);
+}
+
+.top-post__value {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-family: var(--font-display);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.top-post__bar {
+  grid-column: 1;
+  height: 6px;
+  margin-top: .3rem;
+  background: var(--line-soft);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.top-post__bar span {
+  display: block;
+  width: var(--pct);
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+  transform-origin: left;
+  animation: bar-grow .9s var(--ease) both;
+}
+
+.top-post:nth-child(2) .top-post__bar span { animation-delay: .1s; }
+.top-post:nth-child(3) .top-post__bar span { animation-delay: .2s; }
+
+@keyframes bar-grow { from { transform: scaleX(0); } }
+
+.top-posts__note {
+  margin-top: .9rem;
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: var(--muted-2);
+}
+
+/* leitor de tela */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+
+/* ── laptop: resultados descem para uma faixa sob a galeria ───────────── */
+@media (max-width: 1180px) {
+  .case__grid { grid-template-columns: minmax(0, .96fr) minmax(0, 1.8fr); }
+
+  .case__results {
+    grid-column: 1 / -1;
+    padding-bottom: clamp(1rem, 1.5vw, 1.6rem);
+  }
+
+  .result-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  .doodle--arrow { display: none; }
+
+  .numbers__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }
+  .numbers__intro { grid-column: 1; }
+  .stats { grid-column: 1 / -1; grid-row: 2; }
+  .top-posts { grid-column: 2; grid-row: 1; }
+}
+
+/* ── tablet ──────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .case__grid { grid-template-columns: 1fr; }
+
+  .case__lead { max-width: 56ch; }
+
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.6rem; }
+
+  .case__gallery { min-height: clamp(300px, 52vw, 420px); }
+
+  .result-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
+
+  .numbers__grid { grid-template-columns: 1fr; }
+  .numbers__intro, .stats, .top-posts { grid-column: 1; grid-row: auto; }
+  .numbers__lead { max-width: 56ch; }
+}
+
+/* ── celular ─────────────────────────────────────────────────────────── */
+@media (max-width: 620px) {
+  .steps { grid-template-columns: 1fr; }
+
+  /* galeria vira 2 colunas: o card largo e o vídeo ocupam a linha toda */
+  .case__gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: minmax(96px, auto);
+    min-height: 0;
+  }
+
+  .case-card { aspect-ratio: 1; }
+  .case-card--wide { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
+
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.4rem; }
+  .stat { padding-block: .2rem; }
+  .stat + .stat { border-left: 0; }
+  .stat:nth-child(even) { border-left: 1px solid var(--line-soft); }
+}

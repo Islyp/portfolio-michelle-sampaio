@@ -1,0 +1,180 @@
+/* ==========================================================================
+   CONTEÚDOS QUE GERAM CONEXÃO — carrossel de peças
+   Altura uniforme e largura natural: as artes são 1:1 e 4:5, então recortar
+   num formato só cortaria o logo e o telefone da peça da Elevamos.
+   ========================================================================== */
+
+.creatives__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.creatives__title { font-size: clamp(1.4rem, 1rem + 1.5vw, 2.2rem); }
+
+/* ── setas ───────────────────────────────────────────────────────────── */
+.carousel-nav {
+  display: flex;
+  gap: .6rem;
+  flex-shrink: 0;
+}
+
+.carousel-btn {
+  display: grid;
+  place-items: center;
+  width: clamp(46px, 4vw, 58px);
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream-hi);
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--dur) var(--ease),
+              transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+
+.carousel-btn svg {
+  width: 40%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.carousel-btn:hover:not(:disabled) {
+  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.carousel-btn:active:not(:disabled) { transform: translateY(0) scale(.96); }
+
+.carousel-btn:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+/* ── trilho ──────────────────────────────────────────────────────────── */
+/* O movimento é feito por transform, não por scrollLeft: a rolagem nativa
+   é renderizada em pixels inteiros, então a 16px/s a posição só mudava de
+   1 em 1 pixel ~15 vezes por segundo e parecia travada. transform é
+   composto na GPU e aceita subpixel. */
+.creatives__viewport {
+  /* alinha o primeiro card à coluna do .shell */
+  --edge: max(var(--gutter), calc((100% - var(--shell)) / 2 + var(--gutter)));
+  /* largura da dissolvência na entrada do trilho */
+  --fade: clamp(48px, 7vw, 150px);
+
+  position: relative;
+  margin-top: clamp(1.3rem, 2vw, 2.1rem);
+  padding-inline: var(--edge);
+  padding-block: .25rem;
+  overflow: hidden;
+  cursor: grab;
+  /* o arraste horizontal é nosso; o vertical continua rolando a página */
+  touch-action: pan-y;
+}
+
+/* Dissolvência na entrada. Era mask-image, que obriga o navegador a
+   remascarar a área a cada quadro enquanto o trilho anda; como o fundo da
+   seção é uma cor sólida, um gradiente pintado por cima dá o mesmo
+   resultado e não custa nada por quadro. */
+.creatives__viewport::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  width: var(--fade);
+  background: linear-gradient(to right, var(--cream) 0, transparent 100%);
+  pointer-events: none;
+}
+
+.creatives__viewport.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.creatives__track {
+  display: flex;
+  gap: clamp(.7rem, 1.2vw, 1.15rem);
+  width: max-content;
+  will-change: transform;
+  /* o conteúdo do trilho não afeta nada fora dele: dispensa o navegador
+     de reavaliar o resto da página a cada quadro */
+  contain: layout paint;
+}
+
+/* arrastar uma imagem dispararia o arraste nativo do navegador, com
+   fantasma e tudo, cancelando o nosso */
+.creatives__track img { -webkit-user-drag: none; user-select: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .creative__media img { transition: none; }
+}
+
+/* ── card ────────────────────────────────────────────────────────────── */
+.creative {
+  flex: 0 0 auto;
+  /* a coluna é dimensionada pela arte; sem isso uma legenda longa
+     estica o card e quebra o alinhamento das larguras */
+  display: grid;
+  grid-template-columns: min-content;
+}
+
+.creative__media {
+  height: clamp(230px, 26vw, 380px);
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cream-lo);
+}
+
+.creative__media img {
+  height: 100%;
+  width: auto;          /* largura sai da proporção real da arte */
+  max-width: none;
+  object-fit: cover;
+  transition: transform .6s var(--ease);
+}
+
+.creative:hover .creative__media img { transform: scale(1.03); }
+
+.creative__meta { padding-top: .7rem; }
+
+.creative__brand {
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.creative__desc {
+  margin-top: .12em;
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+
+/* ==========================================================================
+   RESPONSIVO
+   ========================================================================== */
+
+@media (max-width: 620px) {
+  /* segue em linha, com o título quebrando: assim a posição das setas não
+     depende de um recuo negativo calibrado para um tamanho específico */
+  .creatives__head {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .creatives__title { flex: 1; }
+
+  .creative__media { height: clamp(210px, 52vw, 260px); }
+
+  .creatives__viewport { --fade: 32px; }
+}

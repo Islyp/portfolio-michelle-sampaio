@@ -1,0 +1,324 @@
+/* ==========================================================================
+   BASE — tokens, reset e componentes compartilhados
+   Michelle Sampaio Rocha · Portfólio
+   ========================================================================== */
+
+:root {
+  /* ── cor ── */
+  --cream:        #f3ede7;   /* fundo principal (amostrado do mockup) */
+  --cream-hi:     #faf7f3;   /* cards / superfícies elevadas */
+  --cream-lo:     #eae2d9;   /* faixas alternadas */
+  --ink:          #14110f;   /* preto tipográfico */
+  --ink-soft:     #332e2a;
+  --muted:        #6e665f;   /* texto de apoio */
+  --muted-2:      #9a918a;
+  --line:         #ddd4cb;   /* traços e divisores */
+  --line-soft:    #e7dfd6;
+  --accent:       #c86d51;   /* terracota (amostrado do mockup) */
+  --accent-hi:    #dc7f61;
+  --accent-soft:  #edc8b8;
+  --accent-wash:  #f6e6dd;
+  --green:        #4c7a52;   /* variações positivas */
+
+  /* ── tipografia ── */
+  --font-display: "Playfair Display", "Times New Roman", Georgia, serif;
+  --font-sans:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* escala fluida */
+  --fs-eyebrow:   clamp(0.66rem, 0.6rem + 0.22vw, 0.8rem);
+  --fs-micro:     clamp(0.63rem, 0.58rem + 0.2vw, 0.76rem);
+  --fs-small:     clamp(0.8rem, 0.76rem + 0.24vw, 0.94rem);
+  --fs-body:      clamp(0.94rem, 0.9rem + 0.28vw, 1.1rem);
+  --fs-lead:      clamp(1rem, 0.94rem + 0.44vw, 1.28rem);
+  --fs-h2:        clamp(1.7rem, 1.3rem + 2.1vw, 3.15rem);
+  --fs-hero:      clamp(2.75rem, 1.5rem + 6vw, 5.9rem);
+
+  /* ── layout ── */
+  --shell:        1340px;
+  --gutter:       clamp(1.15rem, 0.6rem + 2.6vw, 3.5rem);
+  --ink-panel:    #17130f;   /* painéis escuros de largura total */
+  --radius:       14px;
+  --radius-lg:    20px;
+
+  /* ── sombra ── */
+  --shadow-sm:    0 2px 10px rgba(32, 22, 16, .06);
+  --shadow-md:    0 10px 32px -8px rgba(32, 22, 16, .16);
+  --shadow-lg:    0 26px 60px -20px rgba(32, 22, 16, .28);
+
+  /* ── movimento ── */
+  --ease:         cubic-bezier(.22, .61, .36, 1);
+  --dur:          .45s;
+}
+
+/* ── reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  /* o menu off-canvas fica fora da tela via transform; sem isto ele
+     estica a largura rolável do documento no celular */
+  overflow-x: clip;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+
+ul, ol { list-style: none; padding: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ── container ─────────────────────────────────────────────────────────── */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ── tipografia utilitária ─────────────────────────────────────────────── */
+.eyebrow {
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.accent { color: var(--accent); }
+
+/* quebra de linha só no desktop */
+@media (max-width: 660px) { .br-desk { display: none; } }
+
+/* ritmo vertical padrão — toda seção usa este espaçamento */
+.section {
+  padding-block: clamp(2.4rem, 1.2rem + 3vw, 4.3rem);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* título de seção — serifado, caixa alta, como no layout */
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+/* rótulo pequeno acima de listas/colunas */
+.section-label {
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+/* alinha um bloco de seção sangrada à mesma coluna do .shell */
+.shell-pad-left  { padding-left:  max(var(--gutter), calc((100% - var(--shell)) / 2 + var(--gutter))); }
+.shell-pad-right { padding-right: max(var(--gutter), calc((100% - var(--shell)) / 2 + var(--gutter))); }
+
+/* ── botões ────────────────────────────────────────────────────────────── */
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--cream-hi);
+  display: inline-flex;
+  align-items: center;
+  gap: .8em;
+  padding: .82em 1.5em;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border-radius: 999px;
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn--dark:hover { background: var(--accent); }
+
+.btn--accent { --btn-bg: var(--accent); }
+.btn--accent:hover { background: var(--ink); }
+
+.btn__arrow {
+  width: 1.5em;
+  height: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--dur) var(--ease);
+}
+
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+/* ── link com risco desenhado à mão ────────────────────────────────────── */
+.link-scribble {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .9em;
+  padding-bottom: .6em;
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.link-scribble__arrow {
+  width: 2.4em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--dur) var(--ease);
+}
+
+.link-scribble:hover .link-scribble__arrow { transform: translateX(6px); }
+
+.link-scribble__line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 8.6em;
+  height: .7em;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 160;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset .5s var(--ease);
+}
+
+.link-scribble:hover .link-scribble__line { stroke-dashoffset: 160; }
+
+/* ── chips ─────────────────────────────────────────────────────────────── */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.chip {
+  padding: .5em 1.1em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--cream-hi) 60%, transparent);
+  transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── riscos decorativos (doodles) ──────────────────────────────────────── */
+.doodle {
+  position: absolute;
+  pointer-events: none;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .5;
+}
+
+.doodle--filled { fill: var(--ink); stroke: none; }
+
+/* risco ondulado sob palavra em destaque */
+.underline-scribble {
+  position: absolute;
+  left: -1%;
+  bottom: -.06em;
+  width: 102%;
+  height: .3em;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: .9;
+}
+
+/* ── selo circular ─────────────────────────────────────────────────────── */
+.seal {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(88px, 9vw, 128px);
+  aspect-ratio: 1;
+}
+
+.seal > svg:first-child {
+  width: 100%;
+  height: 100%;
+  animation: seal-spin 26s linear infinite;
+}
+
+.seal text {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  /* sem letter-spacing: o textLength do textPath já distribui o espaçamento */
+  text-transform: uppercase;
+  fill: var(--ink-soft);
+}
+
+.seal__star {
+  position: absolute;
+  width: 26%;
+  fill: var(--ink);
+  stroke: none;
+}
+
+@keyframes seal-spin { to { transform: rotate(360deg); } }
+
+/* ── reveal on scroll ──────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+
+.reveal.is-visible { opacity: 1; transform: none; }
