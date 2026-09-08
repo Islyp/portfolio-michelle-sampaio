@@ -114,8 +114,9 @@ Por isso o deploy monta uma pasta só com o que é servido:
   `mkdir -p dist && cp index.html dist/ && cp -r assets dist/ && rm -rf dist/assets/img/Criativo`
 - **Build output directory:** `dist`
 
-Sai de 14 MB para 2,7 MB. Verificado: os 23 arquivos referenciados pelo
-`index.html` estão todos presentes no `dist`.
+Sai de 18 MB para 8,3 MB — o vídeo institucional (5 MB) é o grosso disso.
+Verificado: os arquivos referenciados pelo `index.html` estão todos
+presentes no `dist`.
 
 ---
 
