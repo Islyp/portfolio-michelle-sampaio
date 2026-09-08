@@ -101,18 +101,25 @@ o site continuar sem dependências.
 
 ---
 
-## Publicando (Cloudflare Pages)
+## Publicando (Cloudflare Workers, assets estáticos)
+
+O dashboard do Cloudflare hoje une Pages e Workers num fluxo só; "Connect to
+Git" cria um Worker, não um projeto Pages clássico. Um Worker sem Worker
+script — só servindo arquivos — precisa de um `wrangler.jsonc` na raiz
+apontando o `assets.directory`; é o que está em [`wrangler.jsonc`](wrangler.jsonc).
 
 O repositório guarda mais coisa do que o site precisa servir: os originais em
 alta de `assets/img/Criativo/` (5,4 MB) e os mockups de `docs/` (5,7 MB) são
 fonte e referência, não conteúdo. Publicar a raiz colocaria no ar, entre
 outras coisas, os mockups com as métricas fictícias.
 
-Por isso o deploy monta uma pasta só com o que é servido:
+Por isso o Build command monta uma pasta só com o que é servido, e o
+`wrangler.jsonc` aponta pra ela:
 
 - **Build command:**
   `mkdir -p dist && cp index.html dist/ && cp -r assets dist/ && rm -rf dist/assets/img/Criativo`
-- **Build output directory:** `dist`
+- **Deploy command:** `npx wrangler deploy` (padrão do próprio Cloudflare —
+  lê o `wrangler.jsonc` e sobe `./dist`)
 
 Sai de 18 MB para 8,3 MB — o vídeo institucional (5 MB) é o grosso disso.
 Verificado: os arquivos referenciados pelo `index.html` estão todos
