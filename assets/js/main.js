@@ -215,6 +215,56 @@
     requestAnimationFrame(tick);
   });
 
+  /* ── ampliação de imagem ─────────────────────────────────────────────── */
+  /* O <dialog> cuida sozinho de prender o foco, fechar no Esc e devolver o
+     foco ao botão que abriu. Aqui só trocamos a imagem e abrimos. */
+  const lightbox = document.getElementById('lightbox');
+
+  if (lightbox && typeof lightbox.showModal === 'function') {
+    const alvo = document.getElementById('lightboxImg');
+
+    document.querySelectorAll('[data-lightbox]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        alvo.src = btn.dataset.lightbox;
+        alvo.alt = btn.dataset.lightboxAlt || '';
+        lightbox.showModal();
+      });
+    });
+
+    // clique fora da imagem fecha
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) lightbox.close();
+    });
+
+    lightbox.querySelector('[data-lightbox-close]')
+      ?.addEventListener('click', () => lightbox.close());
+
+    // solta a imagem da memória ao fechar
+    lightbox.addEventListener('close', () => { alvo.removeAttribute('src'); });
+  }
+
+  /* ── vídeo do case ───────────────────────────────────────────────────── */
+  /* O arquivo é nosso, então não há a limitação do embed do Instagram: o
+     play é o nosso botão e o navegador só baixa o vídeo quando ele é
+     acionado (preload="none"), mantendo a página leve até lá. */
+  document.querySelectorAll('[data-play-video]').forEach((btn) => {
+    const video = document.getElementById(btn.dataset.playVideo);
+    if (!video) return;
+
+    btn.addEventListener('click', () => {
+      video.controls = true;
+      video.play();
+      video.closest('.case-card')?.classList.add('is-playing');
+      video.focus();
+    });
+
+    // se o visitante pausar e voltar ao início, o botão reaparece
+    video.addEventListener('ended', () => {
+      video.controls = false;
+      video.closest('.case-card')?.classList.remove('is-playing');
+    });
+  });
+
   /* ── embeds do Instagram ─────────────────────────────────────────────── */
   /* O iframe do Instagram é cross-origin: não dá para ler a altura do
      conteúdo de dentro dele. Calcular por fórmula erra o rodapé, porque
@@ -240,13 +290,37 @@
       document.body.appendChild(s);
     };
 
-    const io = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting) return;
-      io.disconnect();
-      load();
-    }, { rootMargin: '600px 0px' });
+    let io = null;
 
-    io.observe(section);
+    const encerrar = () => {
+      io?.disconnect();
+      window.removeEventListener('scroll', checar);
+      window.removeEventListener('resize', checar);
+    };
+
+    /* Rede de segurança: se o observador não entregar — navegador antigo,
+       aba em segundo plano no momento certo — a seção ficaria com quatro
+       links crus no lugar dos vídeos. Esta checagem não depende dele. */
+    function checar() {
+      const r = section.getBoundingClientRect();
+      if (r.top - window.innerHeight < 600 && r.bottom > -600) {
+        load();
+        encerrar();
+      }
+    }
+
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        load();
+        encerrar();
+      }, { rootMargin: '600px 0px' });
+      io.observe(section);
+    }
+
+    window.addEventListener('scroll', checar, { passive: true });
+    window.addEventListener('resize', checar);
+    checar();
   });
 
   /* ── ano do rodapé ───────────────────────────────────────────────────── */

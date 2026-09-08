@@ -35,7 +35,6 @@
         <ul class="nav__list">
           <li><a href="#sobre">Sobre</a></li>
           <li><a href="#cases">Cases</a></li>
-          <li><a href="#servicos">Serviços</a></li>
           <li><a href="#conteudos">Conteúdos</a></li>
           <li><a href="#resultados">Resultados</a></li>
           <li><a href="#contato">Contato</a></li>
@@ -150,18 +149,16 @@
         <!-- card: post do instagram -->
         <article class="post-card">
           <header class="post-card__top">
-            <span class="post-card__avatar" aria-hidden="true"></span>
+            <img class="post-card__avatar" src="assets/img/cases/elevamos-avatar.png"
+                 alt="" width="96" height="96">
             <span class="post-card__handle">elevamos.curso</span>
             <span class="post-card__dots" aria-hidden="true">•••</span>
           </header>
 
           <div class="post-card__media">
-            <!-- TODO: trocar por assets/img/cases/elevamos-post-1.jpg -->
-            <img src="assets/img/cases/placeholder-post.svg" alt="Post da Elevamos: Segurança que move confiança" width="600" height="600">
-            <div class="post-card__caption">
-              <p class="post-card__headline">Segurança<br>que move<br>confiança.</p>
-              <p class="post-card__sub">Cursos que elevam sua carreira.</p>
-            </div>
+            <img src="assets/img/cases/elevamos-elevando-futuros.jpg"
+                 alt="Post da Elevamos com técnico de capacete olhando para o alto e a frase: elevando futuros, capacitando técnicos."
+                 width="620" height="620" fetchpriority="high">
           </div>
 
           <footer class="post-card__actions">
@@ -182,7 +179,7 @@
         <defs><path id="sealPath" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/></defs>
         <!-- textLength = circunferência (2·π·72 ≈ 452), senão o texto dá a
              volta e o fim encavala no começo -->
-        <text><textPath href="#sealPath" startOffset="0" textLength="452" lengthAdjust="spacing">estratégia • conteúdo • dados • resultados •</textPath></text>
+        <text><textPath href="#sealPath" startOffset="0" textLength="452" lengthAdjust="spacing">estratégia • conteúdo • dados • resultados • </textPath></text>
       </svg>
       <svg class="seal__star" viewBox="0 0 40 40">
         <path d="M20 2c1.2 8.5 3.4 12.8 11.9 16-8.5 3.2-10.7 7.5-11.9 16-1.2-8.5-3.4-12.8-11.9-16C16.6 14.8 18.8 10.5 20 2Z"/>
@@ -225,7 +222,7 @@
     </figure>
 
     <!-- ── painel escuro: o que eu faço ── -->
-    <div class="about__services" id="servicos">
+    <div class="about__services">
       <p class="section-label about__services-label">O que eu faço</p>
 
       <ul class="services">
@@ -387,59 +384,64 @@
 
       <!-- ── galeria de peças ── -->
       <div class="case__gallery reveal">
-        <!-- TODO: cada card aceita <img> em .case-card__media quando as artes chegarem -->
 
-        <a class="case-card case-card--wide" href="https://www.instagram.com/p/DcdhvMGxEOn/" target="_blank" rel="noopener">
-          <div class="case-card__body">
-            <p class="case-card__title">Cursos que<br><em>elevam sua</em><br>carreira.</p>
-            <p class="case-card__tag">Elevamos</p>
-          </div>
-        </a>
+        <div class="case-card case-card--video">
+          <video class="case-video" id="caseVideo"
+                 poster="assets/video/elevamos-poster.jpg"
+                 preload="none" playsinline
+                 width="1280" height="720">
+            <source src="assets/video/elevamos-institucional.mp4" type="video/mp4">
+            <p>Seu navegador não reproduz este vídeo.
+               <a href="assets/video/elevamos-institucional.mp4">Baixar o arquivo</a>.</p>
+          </video>
+          <button class="case-card__play" type="button" data-play-video="caseVideo"
+                  aria-label="Reproduzir o vídeo institucional da Elevamos">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5 20 12 8 19Z"/></svg>
+          </button>
+        </div>
 
-        <a class="case-card" href="https://www.instagram.com/p/DGLjRunRRVa/" target="_blank" rel="noopener">
-          <div class="case-card__body">
-            <p class="case-card__title case-card__title--sm">Do básico<br>ao avançado.</p>
-            <p class="case-card__desc">Formação completa para quem quer crescer.</p>
-            <p class="case-card__tag">Elevamos</p>
-          </div>
-        </a>
-
-        <a class="case-card" href="https://www.instagram.com/p/DMIEbPBMvg8/" target="_blank" rel="noopener">
-          <div class="case-card__body">
-            <p class="case-card__title case-card__title--sm">3 motivos<br>para fazer um<br>curso na<br>Elevamos</p>
-            <p class="case-card__tag">Elevamos</p>
-          </div>
-        </a>
-
-        <a class="case-card case-card--wide case-card--video" href="https://www.instagram.com/p/DbJlWcqpEbK/" target="_blank" rel="noopener">
-          <span class="case-card__play" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M9 6.5 18 12l-9 5.5Z"/></svg>
+        <button class="case-card case-card--art" type="button"
+                data-lightbox="assets/img/criativos/elevamos-elevando-futuros.jpg"
+                data-lightbox-alt="Peça da Elevamos com técnico de capacete olhando para o alto e a frase: elevando futuros, capacitando técnicos."
+                aria-label="Ampliar a peça: elevando futuros, capacitando técnicos">
+          <span class="case-card__media">
+            <img src="assets/img/cases/elevamos-elevando-futuros.jpg"
+                 alt="Peça da Elevamos com técnico de capacete olhando para o alto e a frase: elevando futuros, capacitando técnicos."
+                 width="620" height="620" loading="lazy" decoding="async">
           </span>
-          <span class="sr-only">Vídeo editado para a Elevamos</span>
-        </a>
+          <span class="case-card__zoom" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8 21 21M11 8.4v5.2M8.4 11h5.2"/></svg>
+          </span>
+        </button>
 
-        <a class="case-card" href="https://www.instagram.com/p/DcdhvMGxEOn/" target="_blank" rel="noopener">
-          <div class="case-card__body">
-            <p class="case-card__title case-card__title--sm">Segurança<br>é coisa séria.</p>
-            <p class="case-card__desc">Conhecimento também é proteção.</p>
-            <p class="case-card__tag">Elevamos</p>
-          </div>
-        </a>
+        <button class="case-card case-card--art" type="button"
+                data-lightbox="assets/img/criativos/elevamos-conheca-formacao.jpg"
+                data-lightbox-alt="Peça da Elevamos com as etapas da formação: inscrição e avaliação, treinamento prático, certificação técnica e encaminhamento ao mercado."
+                aria-label="Ampliar a peça: conheça nossa formação">
+          <span class="case-card__media">
+            <img src="assets/img/cases/elevamos-conheca-formacao.jpg"
+                 alt="Peça da Elevamos com as etapas da formação: inscrição e avaliação, treinamento prático, certificação técnica e encaminhamento ao mercado."
+                 width="620" height="620" loading="lazy" decoding="async">
+          </span>
+          <span class="case-card__zoom" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8 21 21M11 8.4v5.2M8.4 11h5.2"/></svg>
+          </span>
+        </button>
 
-        <a class="case-card case-card--art" href="https://www.instagram.com/elevamos.curso/"
-           target="_blank" rel="noopener">
-          <div class="case-card__media">
-            <img src="assets/img/cases/elevamos-nova-turma.jpg"
-                 alt="Arte da Elevamos anunciando inscrições abertas para nova turma, com data de início e horário."
-                 width="760" height="760" loading="lazy" decoding="async">
-          </div>
-          <div class="case-card__body">
-            <p class="case-card__tag case-card__tag--end">Ver o perfil &rarr;</p>
-          </div>
-        </a>
-      </div>
-
-      <!-- ── painel de resultados (dados reais dos insights) ── -->
+        <button class="case-card case-card--art" type="button"
+                data-lightbox="assets/img/criativos/elevamos-ninguem-nasce-tecnico.jpg"
+                data-lightbox-alt="Peça da Elevamos com retrato de técnico e a frase: ninguém nasce técnico, se torna."
+                aria-label="Ampliar a peça: ninguém nasce técnico, se torna">
+          <span class="case-card__media">
+            <img src="assets/img/cases/elevamos-ninguem-nasce-tecnico.jpg"
+                 alt="Peça da Elevamos com retrato de técnico e a frase: ninguém nasce técnico, se torna."
+                 width="620" height="620" loading="lazy" decoding="async">
+          </span>
+          <span class="case-card__zoom" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M15.8 15.8 21 21M11 8.4v5.2M8.4 11h5.2"/></svg>
+          </span>
+        </button>
+      </div>      <!-- ── painel de resultados (dados reais dos insights) ── -->
       <aside class="case__results reveal">
         <p class="section-label">Resultados · ago/2026</p>
 
@@ -583,10 +585,23 @@
           <img src="assets/img/criativos/mariapia-mesa-posta.jpg"
                alt="Mesa posta da Maria Pia Casa com pratos verdes, taças de cristal e rosas vermelhas."
                width="656" height="820" loading="lazy" decoding="async">
+          <span class="ai-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c.8 5.3 2.1 7.6 7.4 8.4-5.3.8-6.6 3.1-7.4 8.4-.8-5.3-2.1-7.6-7.4-8.4 5.3-.8 6.6-3.1 7.4-8.4Z"/></svg>Feito com IA</span>
         </div>
         <div class="creative__meta">
           <p class="creative__brand">Maria Pia Casa</p>
           <p class="creative__desc">Mesa posta &middot; conteúdo de produto</p>
+        </div>
+      </li>
+
+      <li class="creative">
+        <div class="creative__media">
+          <img src="assets/img/criativos/elevamos-elevando-futuros.jpg"
+               alt="Peça da Elevamos com técnico de capacete olhando para o alto e a frase: elevando futuros, capacitando técnicos."
+               width="820" height="820" loading="lazy" decoding="async">
+        </div>
+        <div class="creative__meta">
+          <p class="creative__brand">Elevamos</p>
+          <p class="creative__desc">Institucional &middot; posicionamento</p>
         </div>
       </li>
 
@@ -607,10 +622,24 @@
           <img src="assets/img/criativos/mariapia-bar-dourado.jpg"
                alt="Kit bar dourado da Maria Pia Casa — balde de gelo, coqueteleira e utensílios — fotografado ao ar livre."
                width="656" height="820" loading="lazy" decoding="async">
+          <span class="ai-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c.8 5.3 2.1 7.6 7.4 8.4-5.3.8-6.6 3.1-7.4 8.4-.8-5.3-2.1-7.6-7.4-8.4 5.3-.8 6.6-3.1 7.4-8.4Z"/></svg>Feito com IA</span>
         </div>
         <div class="creative__meta">
           <p class="creative__brand">Maria Pia Casa</p>
           <p class="creative__desc">Kit bar &middot; still de produto</p>
+        </div>
+      </li>
+
+      <li class="creative">
+        <div class="creative__media">
+          <img src="assets/img/criativos/mariapia-taca.jpg"
+               alt="Taça de cristal segurada sobre prato decorado em verde e dourado, da Maria Pia Casa."
+               width="656" height="820" loading="lazy" decoding="async">
+          <span class="ai-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c.8 5.3 2.1 7.6 7.4 8.4-5.3.8-6.6 3.1-7.4 8.4-.8-5.3-2.1-7.6-7.4-8.4 5.3-.8 6.6-3.1 7.4-8.4Z"/></svg>Feito com IA</span>
+        </div>
+        <div class="creative__meta">
+          <p class="creative__brand">Maria Pia Casa</p>
+          <p class="creative__desc">Cristais &middot; vitrine e desejo</p>
         </div>
       </li>
 
@@ -631,10 +660,23 @@
           <img src="assets/img/criativos/mariapia-sala-jantar.jpg"
                alt="Sala de jantar com mesa de madeira, cadeiras cinza e pendentes dourados, ambientada com peças da Maria Pia Casa."
                width="661" height="820" loading="lazy" decoding="async">
+          <span class="ai-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c.8 5.3 2.1 7.6 7.4 8.4-5.3.8-6.6 3.1-7.4 8.4-.8-5.3-2.1-7.6-7.4-8.4 5.3-.8 6.6-3.1 7.4-8.4Z"/></svg>Feito com IA</span>
         </div>
         <div class="creative__meta">
           <p class="creative__brand">Maria Pia Casa</p>
           <p class="creative__desc">Sala de jantar &middot; ambientação</p>
+        </div>
+      </li>
+
+      <li class="creative">
+        <div class="creative__media">
+          <img src="assets/img/criativos/elevamos-ninguem-nasce-tecnico.jpg"
+               alt="Peça da Elevamos com retrato de técnico e a frase: ninguém nasce técnico, se torna."
+               width="820" height="820" loading="lazy" decoding="async">
+        </div>
+        <div class="creative__meta">
+          <p class="creative__brand">Elevamos</p>
+          <p class="creative__desc">Campanha de captação</p>
         </div>
       </li>
 
@@ -652,13 +694,25 @@
 
       <li class="creative">
         <div class="creative__media">
-          <img src="assets/img/criativos/mariapia-taca.jpg"
-               alt="Taça de cristal segurada sobre prato decorado em verde e dourado, da Maria Pia Casa."
-               width="656" height="820" loading="lazy" decoding="async">
+          <img src="assets/img/criativos/elevamos-conheca-formacao.jpg"
+               alt="Peça da Elevamos com as etapas da formação: inscrição e avaliação, treinamento prático, certificação técnica e encaminhamento ao mercado."
+               width="820" height="820" loading="lazy" decoding="async">
         </div>
         <div class="creative__meta">
-          <p class="creative__brand">Maria Pia Casa</p>
-          <p class="creative__desc">Cristais &middot; vitrine e desejo</p>
+          <p class="creative__brand">Elevamos</p>
+          <p class="creative__desc">Etapas da formação &middot; educativo</p>
+        </div>
+      </li>
+
+      <li class="creative">
+        <div class="creative__media">
+          <img src="assets/img/criativos/elevamos-nova-turma.jpg"
+               alt="Arte da Elevamos anunciando inscrições abertas para nova turma, com data de início e horário."
+               width="820" height="820" loading="lazy" decoding="async">
+        </div>
+        <div class="creative__meta">
+          <p class="creative__brand">Elevamos</p>
+          <p class="creative__desc">Divulgação de nova turma</p>
         </div>
       </li>
 
@@ -667,10 +721,23 @@
           <img src="assets/img/criativos/mariapia-coqueteleira.jpg"
                alt="Coqueteleira e utensílios dourados da Maria Pia Casa, com limões cortados sobre a bancada."
                width="656" height="820" loading="lazy" decoding="async">
+          <span class="ai-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c.8 5.3 2.1 7.6 7.4 8.4-5.3.8-6.6 3.1-7.4 8.4-.8-5.3-2.1-7.6-7.4-8.4 5.3-.8 6.6-3.1 7.4-8.4Z"/></svg>Feito com IA</span>
         </div>
         <div class="creative__meta">
           <p class="creative__brand">Maria Pia Casa</p>
           <p class="creative__desc">Coqueteleira &middot; detalhe de produto</p>
+        </div>
+      </li>
+
+      <li class="creative">
+        <div class="creative__media">
+          <img src="assets/img/criativos/elevamos-vire-a-chave.jpg"
+               alt="Peça da Elevamos com técnico ajustando um painel elétrico e a frase: vire a chave na sua carreira."
+               width="820" height="820" loading="lazy" decoding="async">
+        </div>
+        <div class="creative__meta">
+          <p class="creative__brand">Elevamos</p>
+          <p class="creative__desc">Capa de carrossel &middot; captação</p>
         </div>
       </li>
 
@@ -742,6 +809,22 @@
           </div>
         </li>
 
+        <li class="video-card reveal">
+          <div class="video-card__media">
+            <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/p/Dc4QM9LJx43/"
+                        data-instgrm-version="14">
+              <a href="https://www.instagram.com/p/Dc4QM9LJx43/" target="_blank" rel="noopener">
+                Ver este vídeo no Instagram
+              </a>
+            </blockquote>
+          </div>
+          <div class="video-card__meta">
+            <p class="video-card__brand">Elevamos</p>
+            <p class="video-card__desc">Colaboração com @gustavofilwm</p>
+          </div>
+        </li>
+
       </ul>
 
     </div>
@@ -763,7 +846,9 @@
           Disponível para novos projetos<br class="br-desk">
           e desafios incríveis.
         </p>
-        <a class="btn btn--accent" href="mailto:michellesampaiorocha@gmail.com">
+        <a class="btn btn--accent"
+           href="https://wa.me/5511984794796?text=Ol%C3%A1%2C%20Michelle!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar."
+           target="_blank" rel="noopener">
           Vamos conversar
           <svg class="btn__arrow" viewBox="0 0 24 12" aria-hidden="true"><path d="M0 6h21M16 1l5 5-5 5"/></svg>
         </a>
@@ -819,7 +904,7 @@
         <div class="seal seal--footer">
           <svg viewBox="0 0 200 200">
             <defs><path id="footerSealPath" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
-            <text><textPath href="#footerSealPath" startOffset="0" textLength="490" lengthAdjust="spacing">estratégia • criatividade • conteúdo • dados •</textPath></text>
+            <text><textPath href="#footerSealPath" startOffset="0" textLength="490" lengthAdjust="spacing">estratégia • criatividade • conteúdo • dados • </textPath></text>
           </svg>
         </div>
       </div>
@@ -837,6 +922,14 @@
       </a>
     </div>
   </footer>
+
+  <!-- ═══════════════ AMPLIAÇÃO DE IMAGEM ═══════════════ -->
+  <dialog class="lightbox" id="lightbox" aria-label="Peça ampliada">
+    <button class="lightbox__close" type="button" data-lightbox-close aria-label="Fechar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+  </dialog>
 
   <script src="assets/js/main.js" defer></script>
 </body>

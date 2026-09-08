@@ -314,6 +314,66 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 @keyframes seal-spin { to { transform: rotate(360deg); } }
 
+/* ── ampliação de imagem ───────────────────────────────────────────────── */
+/* <dialog> em vez de div: o navegador já entrega prisão de foco, fechamento
+   no Esc e devolução do foco ao botão de origem, sem JS para isso. */
+.lightbox {
+  width: min(92vw, 900px);
+  max-width: none;
+  max-height: 92vh;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  overflow: visible;
+}
+
+.lightbox::backdrop {
+  background: rgba(12, 10, 9, .82);
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+}
+
+.lightbox__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: -.4rem;
+  right: -.4rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--cream-hi);
+  color: var(--ink);
+  box-shadow: var(--shadow-md);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.lightbox__close svg {
+  width: 42%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.lightbox__close:hover { background: var(--accent); color: var(--cream-hi); }
+
+@media (max-width: 620px) {
+  .lightbox { width: 94vw; }
+  .lightbox__close { top: -3rem; right: 0; }
+}
+
 /* ── reveal on scroll ──────────────────────────────────────────────────── */
 .reveal {
   opacity: 0;

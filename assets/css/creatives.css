@@ -126,10 +126,42 @@
 }
 
 .creative__media {
+  position: relative;
   height: clamp(230px, 26vw, 380px);
   overflow: hidden;
   border-radius: 12px;
   background: var(--cream-lo);
+}
+
+/* selo de peça gerada por IA — as artes vão de fundo claro a fundo escuro,
+   então o véu escuro com desfoque garante leitura em todas elas */
+.ai-badge {
+  position: absolute;
+  z-index: 2;
+  top: .5rem;
+  right: .5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .35em;
+  padding: .34em .6em .34em .5em;
+  border-radius: 999px;
+  background: rgba(14, 11, 9, .58);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: .56rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.ai-badge svg {
+  width: .85em;
+  height: auto;
+  fill: currentColor;
+  opacity: .9;
 }
 
 .creative__media img {

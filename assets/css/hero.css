@@ -3,21 +3,22 @@
    ========================================================================== */
 
 /* ── header ────────────────────────────────────────────────────────────── */
+/* Sem backdrop-filter aqui, de propósito: backdrop-filter (como transform e
+   filter) transforma o elemento em bloco de contenção para descendentes
+   position:fixed. O menu off-canvas é filho deste cabeçalho, então ele
+   passava a ser posicionado em relação aos 65px do header em vez da tela
+   inteira — abria com 136px de altura em vez de 800px. Fundo sólido resolve
+   e ainda economiza o custo de compor um desfoque a cada quadro. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: color-mix(in srgb, var(--cream) 88%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--cream);
   border-bottom: 1px solid transparent;
-  transition: border-color var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  transition: border-color var(--dur) var(--ease);
 }
 
-.site-header.is-stuck {
-  border-bottom-color: var(--line-soft);
-  background: color-mix(in srgb, var(--cream) 96%, transparent);
-}
+.site-header.is-stuck { border-bottom-color: var(--line-soft); }
 
 .site-header__inner {
   display: flex;
@@ -323,11 +324,15 @@
   padding: .6rem .75rem;
 }
 
+/* a marca da Elevamos no lugar da foto de perfil — só a seta, que é a parte
+   do logo que ainda se lê a 24px; o lockup inteiro viraria borrão */
 .post-card__avatar {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  object-fit: cover;
   flex-shrink: 0;
 }
 
@@ -353,31 +358,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: .82;
-}
-
-.post-card__caption {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 1rem .95rem 1.1rem;
-  background: linear-gradient(to top, rgba(12, 10, 9, .92) 30%, transparent);
-  color: var(--cream-hi);
-}
-
-.post-card__headline {
-  font-family: var(--font-display);
-  font-size: clamp(.95rem, .7rem + .8vw, 1.3rem);
-  font-weight: 600;
-  line-height: 1.12;
-  text-transform: uppercase;
-  letter-spacing: -.01em;
-}
-
-.post-card__sub {
-  margin-top: .45em;
-  font-size: var(--fs-micro);
-  line-height: 1.4;
-  color: color-mix(in srgb, var(--cream-hi) 76%, transparent);
+  /* opacidade cheia: o .82 existia para escurecer o fundo atrás da legenda
+     sobreposta, que saiu quando a arte real entrou */
 }
 
 .post-card__actions {
@@ -464,7 +446,7 @@
       tanto para fora da coluna, senão saem da viewport ───────────────── */
 @media (max-width: 1400px) {
   .post-card { width: clamp(190px, 18vw, 250px); }
-  /* as posições saem das variáveis do rosto; aqui só o tamanho */;
+  /* as posições saem das variáveis do rosto; aqui só o tamanho */
 }
 
 /* ── laptop: 2 colunas ficam apertadas — título e cards recuam ────────── */
@@ -524,12 +506,15 @@
 
   .site-header__cta { display: none; }
 
+  /* Abaixo do z-index 60 do cabeçalho, e não acima. O menu vive dentro do
+     cabeçalho, que é um contexto de empilhamento — com o véu em 65 no body,
+     ele era pintado por cima de todo esse contexto e lavava os itens do
+     menu, por mais alto que fosse o z-index deles. */
   .nav-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 65;
-    background: rgba(20, 17, 15, .34);
-    backdrop-filter: blur(2px);
+    z-index: 55;
+    background: rgba(20, 17, 15, .38);
     opacity: 0;
     pointer-events: none;
     transition: opacity .35s var(--ease);

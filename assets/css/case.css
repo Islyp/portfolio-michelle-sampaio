@@ -7,7 +7,10 @@
 .case__grid {
   display: grid;
   grid-template-columns: minmax(0, .92fr) minmax(0, 1.78fr) minmax(0, .68fr);
-  align-items: start;
+  /* stretch, não start: com start cada coluna ficava na altura do próprio
+     conteúdo e as três terminavam em pontos diferentes (133px de diferença
+     entre a mais alta e a mais baixa no desktop) */
+  align-items: stretch;
   gap: clamp(1.4rem, 2.4vw, 2.6rem);
 }
 
@@ -79,13 +82,17 @@
 }
 
 /* ── galeria de peças ────────────────────────────────────────────────── */
+/* O vídeo ocupa a largura toda em 16:9 e as três artes ficam numa faixa só
+   embaixo, todas quadradas para a fileira ter uma linha de base única. */
 .case__gallery {
   display: grid;
-  grid-template-columns: 1.62fr 1fr 1fr;
-  grid-template-rows: 1.12fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  align-content: start;
   gap: clamp(.4rem, .7vw, .7rem);
-  min-height: clamp(330px, 33vw, 520px);
 }
+
+.case__gallery > :nth-child(1) { grid-column: 1 / -1; }
 
 .case-card {
   position: relative;
@@ -106,7 +113,40 @@
   box-shadow: var(--shadow-md);
 }
 
-.case-card--wide { grid-column: span 1; }
+/* o vídeo é o ponto focal da galeria: largura toda e a proporção do arquivo */
+.case-card--video {
+  display: block;
+  aspect-ratio: 16 / 9;
+}
+
+.case-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* arquivo é 16:9 como o card: encaixa sem cortar */
+  background: #0d0a08;
+}
+
+/* Centralização exata por posicionamento absoluto. Centralizar por flex
+   dependia de o card não ter mais nada dentro; agora que existe o vídeo
+   ocupando o card inteiro, o botão precisa de referência própria. */
+.case-card--video .case-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(52px, 5vw, 74px);
+  border-width: 2px;
+  background: rgba(14, 11, 9, .34);
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+  cursor: pointer;
+}
+
+/* com o vídeo rodando, o botão sai de cena */
+.case-card--video.is-playing .case-card__play { display: none; }
+
+
 
 .case-card__media {
   position: absolute;
@@ -121,24 +161,74 @@
   opacity: .78;
 }
 
-/* card que mostra uma arte real: a peça aparece inteira, sem escurecer,
-   e o rótulo ganha um véu só atrás dele para continuar legível */
-.case-card--art { background: var(--cream-lo); }
+/* Card de arte real — é um botão que abre a peça ampliada. Todos quadrados,
+   para a fileira ter uma linha de base só; a peça vertical perde um pouco de
+   topo e base na miniatura, mas aparece inteira na ampliação. */
+.case-card--art {
+  display: block;
+  position: relative;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: var(--cream-lo);
+  font: inherit;
+  color: inherit;
+  cursor: zoom-in;
+}
 
-.case-card--art .case-card__media { z-index: 0; }
+.case-card--art .case-card__media {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
 
 .case-card--art .case-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   opacity: 1;
   transition: transform .6s var(--ease);
 }
 
+/* lupa que aparece no hover, sinalizando que dá para ampliar */
+.case-card__zoom {
+  position: absolute;
+  z-index: 1;
+  top: .5rem;
+  right: .5rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(14, 11, 9, .55);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+.case-card__zoom svg {
+  width: 55%;
+  fill: none;
+  stroke: var(--cream-hi);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+.case-card--art:hover .case-card__zoom,
+.case-card--art:focus-visible .case-card__zoom { opacity: 1; }
+
 .case-card--art:hover .case-card__media img { transform: scale(1.04); }
 
+/* o rótulo flutua sobre a arte, com véu só atrás dele */
 .case-card--art .case-card__body {
-  position: relative;
+  position: absolute;
+  inset: auto 0 0 0;
   z-index: 1;
   justify-content: flex-end;
-  background: linear-gradient(to top, rgba(12, 10, 9, .72) 0, transparent 62%);
+  background: linear-gradient(to top, rgba(12, 10, 9, .78) 0, transparent 100%);
 }
 
 .case-card__body {
@@ -184,8 +274,6 @@
 }
 
 /* card de vídeo */
-.case-card--video { align-items: center; justify-content: center; }
-
 .case-card__play {
   display: grid;
   place-items: center;
@@ -196,10 +284,12 @@
   transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 
+/* triângulo desenhado com o centroide em x=12, o centro do viewBox: é o
+   centroide, e não a caixa, que define o centro óptico de uma forma
+   assimétrica. Por isso não há deslocamento manual aqui. */
 .case-card__play svg {
-  width: 46%;
+  width: 42%;
   fill: var(--cream-hi);
-  margin-left: 8%;
 }
 
 .case-card--video:hover .case-card__play {
@@ -216,8 +306,14 @@
   border-radius: var(--radius);
 }
 
+/* com as colunas esticadas, o painel distribui os números pela altura
+   em vez de deixar um vazio embaixo */
+.case__results { display: flex; flex-direction: column; }
+
 .result-list {
   display: grid;
+  flex: 1;
+  align-content: space-between;
   gap: clamp(.85rem, 1.3vw, 1.3rem);
   margin-top: clamp(.8rem, 1.2vw, 1.1rem);
 }

@@ -18,12 +18,18 @@
   color: var(--muted);
 }
 
+/* Três colunas é o máximo aqui: o embed do Instagram tem largura mínima de
+   326px, e com quatro colunas os cards cairiam abaixo disso e quebrariam. */
 .videos__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(.9rem, 1.8vw, 1.8rem);
   margin-top: clamp(1.5rem, 2.4vw, 2.4rem);
 }
+
+/* o quarto vídeo sobra na segunda linha: centraliza em vez de deixá-lo
+   encostado na esquerda */
+.videos__grid > :nth-child(4) { grid-column: 2; }
 
 /* ── área do vídeo ───────────────────────────────────────────────────── */
 /* Quem define a altura é o embed.js do Instagram; aqui só damos um piso
@@ -84,14 +90,15 @@
   color: var(--muted);
 }
 
-
-
 /* ==========================================================================
    RESPONSIVO
    ========================================================================== */
 
+/* com duas colunas os quatro vídeos já fecham 2×2 sozinhos: o quarto volta
+   ao fluxo, senão ficaria preso na coluna 2 e deixaria um buraco */
 @media (max-width: 860px) {
   .videos__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .videos__grid > :nth-child(4) { grid-column: auto; }
 }
 
 @media (max-width: 560px) {
