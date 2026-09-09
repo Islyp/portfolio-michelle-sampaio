@@ -41,6 +41,22 @@
   color: var(--muted);
 }
 
+.case__site {
+  margin-top: .5rem;
+  max-width: 34ch;
+  font-size: var(--fs-micro);
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.case__site a {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-soft);
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+
+.case__site a:hover { color: var(--accent-hi); border-color: var(--accent-hi); }
+
 /* passos: desafio · estratégia · execução · resultados */
 .steps {
   display: grid;
